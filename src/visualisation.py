@@ -216,10 +216,14 @@ class TSP_GUI:
     def draw_main_screen(self):
         """ メイン画面の描画 """
         for i, city in enumerate(self.tsp.cities):
-            screen_x, screen_y = self.coord_to_screen(city)
-            pygame.draw.circle(self.screen, Config.CITY_COLOR, (screen_x, screen_y), self.city_radius)
-            text_surface = self.font.render(str(i), True, Config.TEXT_COLOR)
-            self.screen.blit(text_surface, (screen_x + 12, screen_y - 12))
+    screen_x, screen_y = self.coord_to_screen(city)
+    
+    # クリックされた都市だけ緑色で表示
+    city_color = (0, 255, 0) if i in self.route else Config.CITY_COLOR
+    pygame.draw.circle(self.screen, city_color, (screen_x, screen_y), self.city_radius)
+
+    text_surface = self.font.render(str(i), True, Config.TEXT_COLOR)
+    self.screen.blit(text_surface, (screen_x + 12, screen_y - 12))
 
         # ルートの描画
         if len(self.route) > 1:
